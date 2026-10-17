@@ -19,7 +19,7 @@
 
 // 2) Vitrina interactiva conectada a backend compartido
 (function () {
-  const BASE = 'https://crudcrud.com/api/512dd34f7dda403d9be17b694bdeead7';
+  const BASE = ''; // ya no se usa crudcrud; se lee data/inventario.json estático
   const contenedorUnidades = document.getElementById('unidades-grid');
   const contenedorOport = document.getElementById('oportunidades-grid');
   if (!contenedorUnidades && !contenedorOport) return;
@@ -27,13 +27,15 @@
   let cache = { unidades: [], oportunidades: [] };
 
   function fetchInventario() {
-    return fetch(BASE + '/inventario').then(function (r) { return r.json(); });
+    // Leer inventario local estático (fuente de verdad regenerada por Pepito)
+    return fetch('data/inventario.json').then(function (r) { return r.json(); })
+      .then(function (data) { return data.unidades.concat(data.oportunidades); });
   }
 
   function partir(data) {
     return {
-      unidades: data.filter(function (x) { return x.tipo === 'unidad'; }),
-      oportunidades: data.filter(function (x) { return x.tipo === 'oportunidad'; })
+      unidades: data.filter(function (x) { return (x.id || '').indexOf('u') === 0; }),
+      oportunidades: data.filter(function (x) { return (x.id || '').indexOf('o') === 0; })
     };
   }
 

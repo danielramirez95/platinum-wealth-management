@@ -8,7 +8,7 @@
       "m2": 128,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 5
     },
     {
       "id": "u2",
@@ -17,7 +17,7 @@
       "m2": 142,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 5
     },
     {
       "id": "u3",
@@ -26,7 +26,7 @@
       "m2": 115,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 4
     },
     {
       "id": "u4",
@@ -35,7 +35,7 @@
       "m2": 136,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 6
     },
     {
       "id": "u5",
@@ -44,7 +44,7 @@
       "m2": 150,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 5
     },
     {
       "id": "u6",
@@ -53,12 +53,13 @@
       "m2": 121,
       "retorno": "8%",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 5
     }
   ],
   "oportunidades": [
     {
       "id": "o1",
+      "nombre": "Tokens privados",
       "tipo": "Tokens privados",
       "descripcion": "Tokens de inversión prioritario con beneficios y retorno mejorados.",
       "monto": "USD 10,000+",
@@ -68,12 +69,13 @@
     },
     {
       "id": "o2",
+      "nombre": "Fondo bursátil EE.UU.",
       "tipo": "Fondo bursátil EE.UU.",
       "descripcion": "Fondo de inversión en el mercado bursátil de Estados Unidos.",
       "monto": "USD 10,000+",
       "plazo": "Flexible",
       "total": 7,
-      "disponibles": 7
+      "disponibles": 6
     }
   ]
 }
