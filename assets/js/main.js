@@ -19,7 +19,7 @@
 
 // 2) Vitrina interactiva conectada a backend compartido
 (function () {
-  const BASE = 'https://crudcrud.com/api/4da66671ba0749429b6fc5cd2d5fd2ab';
+  const BASE = 'https://crudcrud.com/api/512dd34f7dda403d9be17b694bdeead7';
   const contenedorUnidades = document.getElementById('unidades-grid');
   const contenedorOport = document.getElementById('oportunidades-grid');
   if (!contenedorUnidades && !contenedorOport) return;
