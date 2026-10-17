@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "unidades": [
+    {
+      "id": "u1",
+      "nombre": "Torre Prisma",
+      "ubicacion": "San Salvador",
+      "m2": 128,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "u2",
+      "nombre": "Torre Altum",
+      "ubicacion": "Santa Elena",
+      "m2": 142,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "u3",
+      "nombre": "Torre Nexus",
+      "ubicacion": "Colonia Escalón",
+      "m2": 115,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "u4",
+      "nombre": "Torre Vértice",
+      "ubicacion": "Nuevo Cuscatlán",
+      "m2": 136,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "u5",
+      "nombre": "Torre Meridiano",
+      "ubicacion": "San Benito",
+      "m2": 150,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "u6",
+      "nombre": "Torre Cenit",
+      "ubicacion": "Antiguo Cuscatlán",
+      "m2": 121,
+      "retorno": "8%",
+      "total": 7,
+      "disponibles": 7
+    }
+  ],
+  "oportunidades": [
+    {
+      "id": "o1",
+      "tipo": "Tokens privados",
+      "descripcion": "Tokens de inversión prioritario con beneficios y retorno mejorados.",
+      "monto": "USD 10,000+",
+      "plazo": "24 meses calendario",
+      "total": 7,
+      "disponibles": 7
+    },
+    {
+      "id": "o2",
+      "tipo": "Fondo bursátil EE.UU.",
+      "descripcion": "Fondo de inversión en el mercado bursátil de Estados Unidos.",
+      "monto": "USD 10,000+",
+      "plazo": "Flexible",
+      "total": 7,
+      "disponibles": 7
+    }
+  ]
+}

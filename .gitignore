@@ -1,0 +1,8 @@
+automations/
+docs/
+nohup.out
+.gitignore
+
+# Proteger datos privados, pero publicar el inventario público de la vitrina
+data/*
+!data/inventario.json
