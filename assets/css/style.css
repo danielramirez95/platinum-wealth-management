@@ -75,3 +75,24 @@ input:focus, select:focus { outline: 2px solid var(--gold); border-color: transp
 
 .site-footer { background: var(--navy); color: #fff; padding: 40px 0; font-size: 14px; }
 .site-footer .legal { opacity: .7; margin-top: 12px; font-size: 12px; }
+/* Sección QR de Marcial */
+.qr-block {
+  margin: 24px 0 32px;
+  text-align: center;
+}
+.qr-block .qr {
+  width: 220px;
+  height: 220px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: inline-block;
+}
+.qr-note {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.qr-note a {
+  color: var(--navy);
+  font-weight: 600;
+}
