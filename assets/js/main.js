@@ -86,9 +86,27 @@
     });
   }
 
+
+  function actualizarResumen(data) {
+    const totalBox = document.getElementById('total-disponibles');
+    const detalleBox = document.getElementById('resumen-detalle');
+    if (!totalBox && !detalleBox) return;
+    const todos = data.unidades.concat(data.oportunidades);
+    const total = todos.reduce(function (s, x) { return s + (x.disponibles || 0); }, 0);
+    if (totalBox) totalBox.textContent = total;
+    if (detalleBox) {
+      const unidades = data.unidades.reduce(function (s, x) { return s + (x.disponibles || 0); }, 0);
+      const oport = data.oportunidades.reduce(function (s, x) { return s + (x.disponibles || 0); }, 0);
+      detalleBox.innerHTML =
+        '<div class="r-item"><span class="r-num">' + unidades + '</span><span class="r-lbl">Apartamentos</span></div>' +
+        '<div class="r-item"><span class="r-num">' + oport + '</span><span class="r-lbl">Oportunidades privadas</span></div>';
+    }
+  }
+
   function renderTodo() {
     renderUnidades(cache.unidades);
     renderOportunidades(cache.oportunidades);
+    actualizarResumen(cache);
   }
 
   fetchInventario().then(function (data) {
