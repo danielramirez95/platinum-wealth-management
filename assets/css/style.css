@@ -96,3 +96,11 @@ input:focus, select:focus { outline: 2px solid var(--gold); border-color: transp
   color: var(--navy);
   font-weight: 600;
 }
+.stat {
+  margin-top: 14px;
+  font-size: 16px;
+}
+.stat strong {
+  color: var(--navy);
+  font-size: 18px;
+}
