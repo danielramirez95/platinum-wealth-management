@@ -1,4 +1,4 @@
-// Platinum Wealth Management — sitio estático (GitHub Pages)
+// Platinum Wealth Management — vitrina interactiva (backend crudcrud, demo 24h)
 // 1) Scroll reveal
 (function () {
   const els = document.querySelectorAll('.reveal');
@@ -17,44 +17,36 @@
   els.forEach(function (el) { io.observe(el); });
 })();
 
-// 2) Vitrina interactiva de oportunidades
+// 2) Vitrina interactiva conectada a backend compartido
 (function () {
-  const KV = 'pwm_reservas_v1';
+  const BASE = 'https://crudcrud.com/api/4da66671ba0749429b6fc5cd2d5fd2ab';
   const contenedorUnidades = document.getElementById('unidades-grid');
   const contenedorOport = document.getElementById('oportunidades-grid');
   if (!contenedorUnidades && !contenedorOport) return;
 
-  // estado persistido localmente: { u1: 2, o1: 1, ... } cuenta reservas hechas por este visitante
-  let reservas = {};
-  try { reservas = JSON.parse(localStorage.getItem(KV) || '{}'); } catch (e) { reservas = {}; }
+  let cache = { unidades: [], oportunidades: [] };
 
-  function guardar() { localStorage.setItem(KV, JSON.stringify(reservas)); }
-
-  function disponiblesDe(obj) {
-    const r = reservas[obj.id] || 0;
-    return Math.max(0, obj.total - r);
+  function fetchInventario() {
+    return fetch(BASE + '/inventario').then(function (r) { return r.json(); });
   }
 
-  fetch('data/inventario.json')
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      renderUnidades(data.unidades);
-      renderOportunidades(data.oportunidades);
-    })
-    .catch(function () {
-      if (contenedorUnidades) contenedorUnidades.innerHTML = '<p class="empty">Las oportunidades se cargarán en breve.</p>';
-    });
+  function partir(data) {
+    return {
+      unidades: data.filter(function (x) { return x.tipo === 'unidad'; }),
+      oportunidades: data.filter(function (x) { return x.tipo === 'oportunidad'; })
+    };
+  }
 
   function renderUnidades(unidades) {
     if (!contenedorUnidades) return;
     contenedorUnidades.innerHTML = '';
     unidades.forEach(function (u) {
-      const dispo = disponiblesDe(u);
+      const dispo = u.disponibles;
+      const n = u.id.replace('u','');
       const card = document.createElement('article');
       card.className = 'card unidad-card';
-      card.dataset.id = u.id;
       card.innerHTML =
-        '<img src="assets/img/torres/torre' + u.id.replace('u','') + '.jpg" alt="' + u.nombre + '" loading="lazy">' +
+        '<img src="assets/img/torres/torre' + n + '.jpg" alt="' + u.nombre + '" loading="lazy">' +
         '<div class="unidad-body">' +
           '<div class="unidad-tags">' +
             '<span class="tag ok">Unidad disponible</span>' +
@@ -75,17 +67,16 @@
     if (!contenedorOport) return;
     contenedorOport.innerHTML = '';
     oportunidades.forEach(function (o) {
-      const dispo = disponiblesDe(o);
+      const dispo = o.disponibles;
       const card = document.createElement('article');
       card.className = 'card oportunidad-card';
-      card.dataset.id = o.id;
       card.innerHTML =
-        '<div class="op-badge">' + (o.tipo === 'Tokens privados' ? '🏛️' : '📈') + '</div>' +
-        '<h3>' + o.tipo + '</h3>' +
-        '<p>' + o.descripcion + '</p>' +
+        '<div class="op-badge">' + (o.id === 'o1' ? '🏛️' : '📈') + '</div>' +
+        '<h3>' + o.nombre + '</h3>' +
+        '<p>' + (o.descripcion || '') + '</p>' +
         '<div class="op-datos">' +
-          '<span><strong>Monto:</strong> ' + o.monto + '</span>' +
-          '<span><strong>Plazo:</strong> ' + o.plazo + '</span>' +
+          '<span><strong>Monto:</strong> ' + (o.monto || '') + '</span>' +
+          '<span><strong>Plazo:</strong> ' + (o.plazo || '') + '</span>' +
         '</div>' +
         '<div class="spaces"><strong>' + dispo + '</strong> de ' + o.total + ' espacios disponibles</div>' +
         '<button class="cta reservar" data-id="' + o.id + '" ' + (dispo === 0 ? 'disabled' : '') + '>' +
@@ -95,27 +86,56 @@
     });
   }
 
-  // Delegación de evento para reservar
+  function renderTodo() {
+    renderUnidades(cache.unidades);
+    renderOportunidades(cache.oportunidades);
+  }
+
+  fetchInventario().then(function (data) {
+    cache = partir(data);
+    renderTodo();
+  }).catch(function () {
+    if (contenedorUnidades) contenedorUnidades.innerHTML = '<p class="empty">Cargando oportunidades…</p>';
+  });
+
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.reservar');
     if (!btn) return;
     const id = btn.dataset.id;
-    reservas[id] = (reservas[id] || 0) + 1;
-    guardar();
-    // re-render solo las cards afectadas
-    const card = btn.closest('[data-id]');
-    const isUnidad = card.classList.contains('unidad-card');
-    const isOport = card.classList.contains('oportunidad-card');
-    // refrescar desde el fetch para mantener consistencia
-    fetch('data/inventario.json')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (isUnidad) renderUnidades(data.unidades);
-        if (isOport) renderOportunidades(data.oportunidades);
-        // aviso
+    btn.disabled = true;
+    // Leer item actual y descontar
+    fetchInventario().then(function (data) {
+      const recibidas = partir(data);
+      const todos = recibidas.unidades.concat(recibidas.oportunidades);
+      const item = todos.find(function (x) { return x.id === id; });
+      if (!item || item.disponibles <= 0) {
+        toast('⛔ Ese espacio ya se agotó.');
+        btn.disabled = false;
+        refresh();
+        return;
+      }
+      const nuevo = Object.assign({}, item, { disponibles: item.disponibles - 1 });
+      // crudcrud: actualizar por _id
+      return fetch(BASE + '/inventario/' + item._id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevo)
+      }).then(function (r) { return r.json(); }).then(function () {
         toast('✅ Espacio reservado. Nuestro asesor te contactará por Telegram.');
+        refresh();
       });
+    }).catch(function () {
+      toast('Error de conexión. Inténtalo de nuevo.');
+      btn.disabled = false;
+    });
   });
+
+  function refresh() {
+    fetchInventario().then(function (data) {
+      cache = partir(data);
+      renderTodo();
+    });
+  }
 
   function toast(msg) {
     let t = document.getElementById('pwm-toast');
@@ -130,7 +150,6 @@
     t._t = setTimeout(function () { t.classList.remove('show'); }, 3200);
   }
 
-  // Botón de inicio de conversación (deja listo para ir a Telegram)
   const btnHero = document.querySelector('.hero-actions .cta:not(.ghost)');
   if (btnHero) {
     btnHero.addEventListener('click', function (e) {
