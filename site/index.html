@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platinum Wealth Management — Fondo Inmobiliario, Asesoría y Administración de Capital</title>
+<meta name="description" content="Platinum Wealth Management: fondo de compra de unidades inmobiliarias, asesoría patrimonial y administración de capital en El Salvador. Mínimo de inversión USD 10,000.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/img/logo.jpg" alt="Platinum Wealth Management" class="logo">
+      <span>Platinum Wealth Management</span>
+    </div>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#fondo">Fondo inmobiliario</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Tu capital, trabajando en bienes inmobiliarios</h1>
+    <p class="lede">Fondo de compra de unidades inmobiliarias, asesoría patrimonial y administración de capital. Personas y empresas.</p>
+    <a class="cta" href="#contacto">Invertir desde USD 10,000</a>
+  </div>
+</section>
+
+<section id="servicios" class="section">
+  <div class="wrap">
+    <h2>Lo que hacemos</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>Fondo inmobiliario</h3>
+        <p>Inversión en unidades inmobiliarias con capital de nuestros clientes, gestionado con criterio y seguimiento.</p>
+      </article>
+      <article class="card">
+        <h3>Asesoría patrimonial</h3>
+        <p>Planificación y estructura de tu patrimonio, alineada a tus objetivos y perfil de riesgo.</p>
+      </article>
+      <article class="card">
+        <h3>Administración de capital</h3>
+        <p>Gestión y seguimiento de portafolio, con claridad sobre dónde y cómo está trabajando tu capital.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="fondo" class="section alt">
+  <div class="wrap">
+    <h2>El fondo inmobiliario</h2>
+    <p>Compramos y administramos unidades inmobiliarias. El rendimiento depende de cada activo y no es fijo.</p>
+    <ul class="facts">
+      <li><strong>Mínimo de inversión:</strong> USD 10,000</li>
+      <li><strong>Modalidad:</strong> capital en compra y gestión de inmuebles</li>
+      <li><strong>Enfoque:</strong> personas y empresas</li>
+    </ul>
+    <p class="disclaimer-mini">El rendimiento se presenta como rango estimado según perfil de riesgo. No garantizamos resultados.</p>
+  </div>
+</section>
+
+<section id="contacto" class="section">
+  <div class="wrap">
+    <h2>Empieza ahora</h2>
+    <p>Cuéntanos tu intención de inversión y te contactamos por Telegram.</p>
+    <form id="lead-form" action="/api/lead" method="post">
+      <label>Nombre completo
+        <input type="text" name="nombre" required autocomplete="name">
+      </label>
+      <label>Correo o teléfono
+        <input type="text" name="contacto" required>
+      </label>
+      <label>Monto estimado a invertir (USD)
+        <input type="number" name="monto" min="10000" required placeholder="10000">
+      </label>
+      <label>Perfil de riesgo
+        <select name="perfil" required>
+          <option value="">Selecciona…</option>
+          <option value="conservador">Conservador</option>
+          <option value="moderado">Moderado</option>
+          <option value="agresivo">Agresivo</option>
+        </select>
+      </label>
+      <label>¿Persona o empresa?
+        <select name="tipo" required>
+          <option value="">Selecciona…</option>
+          <option value="persona">Persona</option>
+          <option value="empresa">Empresa</option>
+        </select>
+      </label>
+      <button type="submit" class="cta">Enviar</button>
+      <p class="disclaimer-mini">Al enviar aceptas ser contactado. Tus datos son privados y solo se usan para este fin.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>© 2026 Platinum Wealth Management · El Salvador</p>
+    <p class="legal">Aviso legal: el rendimiento es una estimación sujeta a condiciones de mercado y al perfil de riesgo de cada inversionista. Nada en este sitio constituye una oferta garantizada ni asesoría vinculante. Toda inversión conlleva riesgo de pérdida del capital.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

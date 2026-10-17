@@ -1,0 +1,6 @@
+.env
+node_modules/
+data/leads.json
+data/.notified
+.DS_Store
+nohup.out
